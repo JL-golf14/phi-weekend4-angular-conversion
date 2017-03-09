@@ -13,38 +13,21 @@ myApp.controller('TaskController', ['$http', 'TaskFactory', function($http, Task
   // }
 
   self.addTask = function() {
-    $http({
-      method: 'POST',
-      url: '/tasks',
-      data: self.newTask
-    }).then(function(response){
-      console.log(response);
-      TaskFactory.updateTasks();
-      self.newTask = {};
-    });
-  }
+TaskFactory.addTask(self.newTask);
+  };
 
   self.deleteTask = function(taskId) {
-    $http({
-      method: 'DELETE',
-      url: '/tasks/' + taskId
-    }).then(function(response) {
-      TaskFactory.updateTasks();
-    });
-  }
+    TaskFactory.deleteTask(taskId);
+  };
 
   // self.completeTask will stay, because it's the glue between the controller and view
   self.completeTask = function(taskId) {
     TaskFactory.completeTask(taskId);
-  }
+  };
 
   self.uncompleteTask = function(taskId) {
-    $http({
-      method: 'PUT',
-      url: '/tasks/uncomplete/' + taskId
-    }).then(function(response) {
-      TaskFactory.updateTasks();
-    });
+    TaskFactory.uncompleteTask(taskId);
+
   }
 
 

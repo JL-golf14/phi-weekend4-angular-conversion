@@ -27,12 +27,40 @@ myApp.factory('TaskFactory', ['$http', function($http) {
       getTasks();
     });
   }
-
+function addTask(newTask){
+  $http({
+    method: 'POST',
+    url: '/tasks',
+    data: newTask
+  }).then(function(response){
+    console.log(response);
+    getTasks();
+  });
+}
+function deleteTask(taskId){
+  $http({
+    method: 'DELETE',
+    url: '/tasks/' + taskId
+  }).then(function(response) {
+    getTasks();
+  });
+}
+ function uncompleteTask(taskId){
+  $http({
+    method: 'PUT',
+    url: '/tasks/uncomplete/' + taskId
+  }).then(function(response) {
+    getTasks();
+  });
+}
 
   // this is the public API, if it's not in here, your controller won't see it
   return {
     allTasks: factoryTasks,
     updateTasks: getTasks,
-    completeTask: completeTask
+    completeTask: completeTask,
+    addTask:addTask,
+    deleteTask: deleteTask,
+    uncompleteTask: uncompleteTask
   };
 }]);
